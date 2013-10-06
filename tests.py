@@ -168,17 +168,18 @@ class WebTest(unittest.TestCase):
         # d.addErrback(fail)
         return d
 
-
-
     def test_empty_urls(self):
-        d = self.job_setup(urls=[])
+        struct = {
+            'urls': [],
+        }
+        d = self.web.post(
+            "/", body=dumps(struct),
+        )
 
-        def handle_setup_response(response):
-            params = loads(response.value())
-            images = params.get('num_images')
-            self.assertTrue(images == 0, "Images was %s" % images)
+        def handle_job_response(response):
+            self.assertCode(response, 400)
 
-        d.addCallback(handle_setup_response)
+        d.addCallback(handle_job_response)
         return d
 
     def test_depth_0(self):
