@@ -64,6 +64,9 @@ class CreepyAPI(APIResource):
             depth : levels of recursion
         """
         urls = self.require(request, 'urls')
+        if not urls:
+            raise BadRequestResponse('You must provide at least one URL.')
+
         depth = min(request.params.get('depth', 0), 3)
         job = Job(urls, depth, debug=self.debug)
         self.queue.put(job)
