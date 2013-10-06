@@ -1,0 +1,2 @@
+include twisted/plugins/*.py
+include static/*
