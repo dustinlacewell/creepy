@@ -4,20 +4,22 @@ Running The Worker
 
 Provided that the creepy is in the PYTHONPATH you may run these commands::
 
-    # help on the twistd flags
+help on the twistd flags
     twistd --help
 
-    # help on the plugin flags
+help on the plugin flags
     twistd creepy --help
 
-    # start the daemon in various different configurations
+start the daemon in various different configurations
     twistd -n creepy
     twistd -n creepy --strport tcp:8000 --debug
     twistd -n -r epoll creepy --strport unix:/var/tmp/creepy-unix-socket
     twistd -n creepy -s ssl:8000:privateKey=key.pem:certKey=cert.pem
-    # change the amount of concurrent jobs with -j
+
+change the amount of concurrent jobs with -j
     twistd -n creepy -j 3
-    # change the amount of concurrent workers per job with -w
+
+change the amount of concurrent workers per job with -w
     twistd -n creepy -w 100
 
 
@@ -39,12 +41,12 @@ some kind, or from an init.d script::
 
 Breaking down these options:
     
- * --reactor=epoll is a more efficient reactor implementation.
- * --nodaemon stops twisted from daemonising, and will run it in the foreground
+ * **--reactor=epoll** is a more efficient reactor implementation.
+ * **--nodaemon** stops twisted from daemonising, and will run it in the foreground
    omit --nodaemon, unless you are running under a supervisor.
- * --syslog and --prefix provide logging to your OS syslog daemon.
- * --pidfile will save the pid in an appropriate place.
- * --uid and --gid will drop privs to the nobody user (uid 1)
+ * **--syslog** and --prefix provide logging to your OS syslog daemon.
+ * **--pidfile** will save the pid in an appropriate place.
+ * **--uid** and **--gid** will drop privs to the nobody user (uid 1)
 
 No output will be seen on your terminal if you test this command. Look in
 /var/log/syslog or /var/log/messages to see the logs.
@@ -55,9 +57,11 @@ Browsing the REST endpoints
 
 * denotes required arguments
 
-POST "/echo": CreepyAPI.echo
-    args:
-        ANY
+POST "/echo"
+------------
+CreepyAPI.echo
+* args:
+  * ANY
 
 CreepyAPI.echo will simply return the provided JSON encoded arguments back to
 the caller.
