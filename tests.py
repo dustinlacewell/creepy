@@ -170,6 +170,17 @@ class WebTest(unittest.TestCase):
 
 
 
+    def test_empty_urls(self):
+        d = self.job_setup(urls=[])
+
+        def handle_setup_response(response):
+            params = loads(response.value())
+            images = params.get('num_images')
+            self.assertTrue(images == 0, "Images was %s" % images)
+
+        d.addCallback(handle_setup_response)
+        return d
+
     def test_depth_0(self):
         d = self.job_setup()
 
