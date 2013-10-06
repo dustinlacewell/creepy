@@ -44,12 +44,12 @@ class SetupService(service.Service):
         """
         Custom initialisation code goes here.
         """
-        log.msg("Retriculating Splines")
+        log.msg("Reticulating Splines")
 
         self.reactor.callLater(3, self.done)
 
     def done(self):
-        log.msg("Finished retriculating splines")
+        log.msg("Finished reticulating splines")
 
 def makeService(options):
     """
@@ -67,7 +67,7 @@ def makeService(options):
 
     debug = options['debug']
 
-    api = CreepyAPI(jobs, workers, debug=True)
+    api = CreepyAPI(options['jobs'], options['workers'], debug=True)
     f = Site(api, timeout=None)
     endpoint = endpoints.serverFromString(reactor, options['endpoint'])
     server_service = internet.StreamServerEndpointService(endpoint, f)
