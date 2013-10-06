@@ -5,21 +5,26 @@ Running The Worker
 Provided that the creepy is in the PYTHONPATH you may run these commands::
 
 help on the twistd flags
+
     twistd --help
 
 help on the plugin flags
+
     twistd creepy --help
 
 start the daemon in various different configurations
+
     twistd -n creepy
     twistd -n creepy --strport tcp:8000 --debug
     twistd -n -r epoll creepy --strport unix:/var/tmp/creepy-unix-socket
     twistd -n creepy -s ssl:8000:privateKey=key.pem:certKey=cert.pem
 
 change the amount of concurrent jobs with -j
+
     twistd -n creepy -j 3
 
 change the amount of concurrent workers per job with -w
+
     twistd -n creepy -w 100
 
 
