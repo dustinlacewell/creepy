@@ -1,4 +1,3 @@
-
 Running The Worker
 -------------------
 
@@ -62,9 +61,8 @@ Browsing the REST endpoints
 
 * denotes required arguments
 
-POST "/echo"
-------------
-CreepyAPI.echo
+## POST "/echo"
+### CreepyAPI.echo
 * args:
   * ANY
 
