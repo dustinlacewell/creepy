@@ -1,4 +1,3 @@
-
 Running The Worker
 -------------------
 
@@ -60,43 +59,47 @@ No output will be seen on your terminal if you test this command. Look in
 Browsing the REST endpoints
 ---------------------------
 
-* denotes required arguments
+*bold arguments are required*
 
-POST "/echo"
-------------
-CreepyAPI.echo
-* args:
-  * ANY
+**POST "/echo"**: *CreepyAPI.echo*
 
 CreepyAPI.echo will simply return the provided JSON encoded arguments back to
 the caller.
 
+* args:
+  * ANY
+
 --
 
-POST "/": CreepyAPI.start_job
-    args:
-        * "urls": list of urls to crawl
-        - "depth": How many levels of recursion past the initially provided
-           urls to crawl. Default 0. Max 3. Any value above 3 will be limited
-           to 3.
+**POST "/"**: *CreepyAPI.start_job*
 
-    retval:
+CreepyAPI.start_job will initialize a job and place it into the job queue with
+a status of "pending". Jobs are processed in order, one at a time.
+
+* args:
+ * **"urls"**: list of urls to crawl
+ * "depth": How many levels of recursion past the initially provided
+            urls to crawl. Default 0. Max 3. Any value above 3 will be limited
+            to 3.
+
+retval:
 
         {
             "job": "XnCCZiYPTfnjB6ZwZSwfxC",
             "response_code": 200
         }
 
-CreepyAPI.start_job will initialize a job and place it into the job queue with
-a status of "pending". Jobs are processed in order, one at a time.
-
 --
 
-GET "/status/<job id>"
-    args:
-        NONE
+**GET "/status/<job id>"**: *CreepyAPI.job_status*
 
-    retval:
+CreepyAPI.job_status will return JSON encoded data describing the state of queried job.
+
+* args:
+  * NONE
+
+retval:
+
         {
             "status": "running",
             "num_completed": 0,
@@ -109,7 +112,7 @@ GET "/status/<job id>"
             "urls": ["http://docker.io"]
         }
 
-        when finished
+when finished:
 
         {
             "status": "finished",
@@ -125,21 +128,25 @@ GET "/status/<job id>"
             "urls": ["http://docker.io"]
         }        
 
-CreepyAPI.job_status will return JSON encoded data describing the state of queried job.
 
 --
 
-GET "/result/<job id>"
-    args:
-        - "result_format": one of:
-            'list' : Format "results" as a simple list of all images collected.
-            'by_page' : Format "results" as a mapping of pages scraped to images found on those pages.
-            'by_image' : Format "results" as a mapping of images to pages those images were found on.
+**GET "/result/<job id>"**: *CreepyAPI.job_result*
 
-        - "include_empty": If true, include pages scraped that contained no images.
+CreepyAPI.job_result will return information about completed jobs including
+runtime and the results of the scraping work. If the job is not yet complete
+job_result will return an error.
 
+* args:
+  * "result_format": one of -
+    * 'list' : Format "results" as a simple list of all images collected.
+    * 'by_page' : Format "results" as a mapping of pages scraped to images found on those pages.
+    * 'by_image' : Format "results" as a mapping of images to pages those images were found on.
 
-    retval:
+  * "include_empty": If true, include pages scraped that contained no images.
+
+retval:
+
         {
             "total_time": 70.57744407653809,
             "num_pages": 1770,
@@ -152,6 +159,3 @@ GET "/result/<job id>"
             "urls": ["http://docker.io"]
         }
 
-CreepyAPI.job_result will return information about completed jobs including
-runtime and the results of the scraping work. If the job is not yet complete
-job_result will return an error.
